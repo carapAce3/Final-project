@@ -84,8 +84,10 @@ back = image.load('map.jpg')
  
 
 arrows = []
+
 guy = Player2('guy.png',50,190,10,40,80)
 enemy1 = Player2('enemy1.png', 500,200,10,60,80)
+coin = Player('money.png',1000,1000,10,50,50)
 sword1 = Player('sword3.png',5000,100,10,80,80)
 sword2 = Player('sword2.png',5000,100,10,80,80)
 bow1 = Player('bow1.png',5000,100,10,80,80)
@@ -94,11 +96,12 @@ p1 = Player('platform.png', 30,200,10,200,100)
 p2 = Player('platform.png', 400,250,10,200,100)
 p3 = Player('platform.png', 900,250,10,200,100)
 
-
 platforms = []
 platforms.append(p1)
 platforms.append(p2)
 platforms.append(p3)
+
+
 
 
 show_image_time_sword = 0  # Початковий час 
@@ -132,7 +135,7 @@ while game:
                     bow1.rect.y = guy.rect.y - 10
                     show_image_time_bow = time.get_ticks()  # час початку показу зображення
                     showing_image_bow = True
-                    arrow = Player2('arrow.png',bow1.rect.x + 20 ,bow1.rect.y + 10  , 10, 60, 60)
+                    arrow = Player2('arrow.png',bow1.rect.x + 20 ,bow1.rect.y + 10  , 1641346, 60, 60)
                     arrows.append(arrow)
                     cooldown_time = tm.monotonic()
                     
@@ -150,7 +153,8 @@ while game:
     bow1.reset()
     bow2.reset()
     enemy1.reset()
-    
+    coin.reset()
+
     if guy.rect.y <= 390:
         guy.rect.y += 3
 
@@ -174,11 +178,18 @@ while game:
         if a.rect.x >= 1200:
             arrows.remove(a)
         if a.rect.colliderect(enemy1):
-                enemy1.rect.y = -1000
-                arrows.remove(a)
+                    enemy1.rect.y = -1000
+                    arrows.remove(a)
+                        
+
+                
 
     if sword1.rect.colliderect(enemy1):
+        coin.rect.x = enemy1.rect.x + 0
+        coin.rect.y = enemy1.rect.y + 0
         enemy1.rect.y = -1000
+    if guy.rect.colliderect(coin):
+        coin.rect.y = -1000
    
     display.update()
     clock.tick(60)
